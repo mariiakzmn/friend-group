@@ -20,12 +20,13 @@ class Person:
         
         self.relationships[person.name] = relationship
         
-        if relationship == "friend":
-            person.relationships[self.name] = "friend"
-            
+        
+        if relationship in ["friend", "colleage", "sibling"]:
+            person.relationships[self.name] = relationship
         elif relationship == "parent":
             person.relationships[self.name] = "kid"
-            
+        elif relationship == "kid":
+            person.relationships[self.name] = "parent"
         
         pass
         
@@ -33,10 +34,12 @@ class Person:
         
     
 
-my_group = [Person("Jill", 26, "biologist", relationships={"Zalika":"friend"}),
-            Person("Zalika", 28, "artist", relationships={"Jill":"friend"}),
+my_group = [Person("Jill", 26, "biologist"),
+            Person("Zalika", 28, "artist"),
             Person("John", 27, "writer"),
             Person("Nash", 34, "chef")     
 ]
 
-my_group[0].set_relationship(my_group[1], "friend")
+# Set relationship of Jill<->Zalika as "friend"
+my_group[0].set_relationship(my_group[1], "friend") 
+
