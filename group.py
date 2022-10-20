@@ -5,6 +5,18 @@
 
 class Person:
     
+    
+    reciprocal_relationships = ["friend",
+                                "colleage",
+                                "sibling",
+                                "partner",
+                                "cousin"]
+    
+    other_relationships = {"parent":"kid",
+                           "kid":"parent",
+                           "tennant":"landlord",
+                           "landlord":"tennant"}
+    
     def __init__(self, name, age, job=None, relationships=None):
         self.name = name
         self.age = age
@@ -21,25 +33,28 @@ class Person:
         self.relationships[person.name] = relationship
         
         
-        if relationship in ["friend", "colleage", "sibling"]:
+        if relationship in self.reciprocal_relationships:
             person.relationships[self.name] = relationship
-        elif relationship == "parent":
-            person.relationships[self.name] = "kid"
-        elif relationship == "kid":
-            person.relationships[self.name] = "parent"
-        
-        pass
-        
+        elif relationship in self.other_relationships.keys():
+            person.relationships[self.name] = self.other_relationships[relationship]
+                
     
         
     
 
-my_group = [Person("Jill", 26, "biologist"),
-            Person("Zalika", 28, "artist"),
-            Person("John", 27, "writer"),
-            Person("Nash", 34, "chef")     
-]
+my_group = {"Jill"  : Person("Jill",   26, "biologist"),
+            "Zalika": Person("Zalika", 28, "artist"),
+            "John"  : Person("John",   27, "writer"),
+            "Nash"  : Person("Nash",   34, "chef")     
+}
 
 # Set relationship of Jill<->Zalika as "friend"
-my_group[0].set_relationship(my_group[1], "friend") 
+my_group["Jill"].set_relationship(my_group["Zalika"], "friend")
+my_group["Jill"].set_relationship(my_group["John"], "partner") 
+
+
+for p in my_group.keys():
+    print(f"{p}'s Relationships are: ")
+    print(my_group[p].relationships)
+
 
